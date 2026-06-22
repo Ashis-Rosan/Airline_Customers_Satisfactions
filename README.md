@@ -135,11 +135,13 @@ FROM airline_details
 WHERE Satisfaction='Neutral or Dissatisfied'
 GROUP BY Class;
 ```
-**Economy-class customers are the most unhappy group with the total number of 18,994.**
+**Economy-class customers are the most unhappy group with the total number of 18,994.**  
 
 4. Which age group is most satisfied?
+   
 ```SQL
 SELECT
+type_of_travel,
     CASE
         WHEN Age < 25 THEN 'Young'
         WHEN Age BETWEEN 25 AND 45 THEN 'Adult'
@@ -147,9 +149,87 @@ SELECT
     END AS Age_Group,
     Satisfaction,
     COUNT(*) AS Customers
-FROM airline_data
-GROUP BY Age_Group, Satisfaction;
+FROM airline_details
+GROUP BY type_of_travel,Age_Group, Satisfaction;
 ```
+**Middle-aged (Adult) business travelers are usually happier with the airline**   
+
+5. Do returning customers show higher satisfaction?
+``` SQL
+SELECT
+    Customer_Type,
+    Satisfaction,
+    COUNT(*) AS Total
+FROM airline_data
+GROUP BY Customer_Type, Satisfaction;
+```
+**Returning customers are more satisfied than first-time customers.**
+
+6. Which type of travel has the highest satisfaction?
+```SQL
+SELECT
+    Type_of_Travel,
+    Satisfaction,
+    COUNT(*) AS Total
+FROM airline_details
+GROUP BY Type_of_Travel, Satisfaction;
+```
+**Business travelers are more happier with the airline than people traveling for personal reasons.**
+
+7. Does food quality affect satisfaction?
+```SQL
+SELECT
+    Satisfaction,
+    AVG(Food_and_Drink) AS Avg_Food_Rating
+FROM airline_data
+GROUP BY Satisfaction;
+```
+**Food quality directly impacts passenger experience.**
+8. Which Customer Segment Travels the Longest Distance?
+```SQL
+SELECT
+    Type_of_Travel,
+    AVG(Flight_Distance) AS Avg_Distance
+FROM airline_data
+GROUP BY Type_of_Travel;
+```
+**People who travel for business usually fly longer distances compared to people who travel for personal reasons**
+
+9. Which Class Has the Best Seat Comfort Rating?
+```SQL
+SELECT
+    Class,
+    AVG(Seat_Comfort) AS Avg_Comfort
+FROM airline_data
+GROUP BY Class
+ORDER BY Avg_Comfort DESC;
+```
+Business Class is the most comfortable seating option on a flight.
+
+14. Which gender has higher satisfaction?
+```SQL
+SELECT
+    Gender,
+    Satisfaction,
+    COUNT(*) AS Total
+FROM airline_data
+GROUP BY Gender, Satisfaction;
+```
+## Conclusion
+
+This analysis helped identify the main factors that affect airline customer satisfaction.
+To improve customer satisfaction, the airline should reduce delays, enhance Economy Class services, and strengthen loyalty programs.
+These improvements can help increase customer satisfaction, retain more customers, and support business growth.
+
+
+
+
+
+
+
+
+
+
 
 
 
